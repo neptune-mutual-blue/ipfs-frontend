@@ -1,0 +1,14 @@
+---
+interface Props {
+  wrapperClass?: string,
+  className?: string
+}
+
+const { wrapperClass, className } = Astro.props;
+---
+
+<div class={`container component ${wrapperClass}`}>
+  <div class={`inner ${className}`}>
+    <slot />
+  </div>
+</div>

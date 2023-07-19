@@ -1,0 +1,18 @@
+@use "../design-system/utils";
+@use "../design-system/colors";
+@use "../design-system/shadows";
+@use "../design-system/typography/styles";
+@use "../design-system/typography/weights";
+@use "../design-system/theme/light";
+@use "../design-system/theme/dark";
+
+.container.component {
+  margin: auto;
+  max-width: 720px;
+  padding: auto;
+
+  @media screen and (max-width: 1399px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

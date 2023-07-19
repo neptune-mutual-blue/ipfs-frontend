@@ -1,0 +1,41 @@
+---
+import Section from "./Section.astro";
+import VideoSection from "./VideoSection.astro";
+
+interface Props {
+  data: LinkNav[];
+}
+const { data } = Astro.props;
+---
+
+{
+  data
+    .filter((nav) => nav.children)
+    .map(
+      ({ children }) =>
+        children && (
+          <div class="sub menu container" data-open="false">
+            <div class="left space" />
+
+            <div class="content">
+              <div class="non video sections">
+                {children
+                  .filter((x) => x.type === "section")
+                  .map((child) => {
+                    return <Section section={child} />;
+                  })}
+              </div>
+              <div class="video sections">
+                {children
+                  .filter((x) => x.type !== "section")
+                  .map((child) => {
+                    return <VideoSection section={child} />;
+                  })}
+              </div>
+            </div>
+
+            <div class="right space" />
+          </div>
+        )
+    )
+}

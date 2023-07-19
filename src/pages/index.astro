@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Seo from "../components/Seo.astro";
+import styles from "./index.scss?inline";
+import Home from "../views/Home.astro"
+---
+
+<BaseLayout headerStyle="default">
+  <Seo
+    slot="seo"
+    title="Neptune Mutual IPFS Gateway"
+    description="Welcome to Neptune Mutual IPFS Gateway"
+    og={{
+      image: "/assets/images/meta/og/ipfs.png",
+      imageAlt: "Neptune Mutual IPFS Gateway",
+    }}
+  />
+  <style slot="header" is:inline set:html={styles}></style>
+  
+    <Home />
+
+  <Fragment slot="footer">
+    <script src="../scripts/home/index.js"></script>
+  </Fragment>
+</BaseLayout>

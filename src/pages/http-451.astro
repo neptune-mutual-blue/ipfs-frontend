@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Seo from "../components/Seo.astro";
+import styles from "./http-451.scss?inline";
+import ErrorPage from "../views/ErrorPage.astro"
+---
+
+<BaseLayout headerStyle="default">
+  <Seo
+    slot="seo"
+    title="HTTP 451: Blocked for Legal Reasons"
+    description="We Can't Serve This Content"
+    og={{
+      image: "/assets/images/meta/og/ipfs.png",
+      imageAlt: "Neptune Mutual IPFS Gateway",
+    }}
+  />
+  <style slot="header" is:inline set:html={styles}></style>
+    <ErrorPage 
+      title="HTTP 451: Blocked for Legal Reasons"
+      heading="We Can't Serve This Content"
+      info="Unfortunately, due to compliance with legal requirements, we are unable to host any IPFS resources of unknown origin at the moment. However, if you are interested in having your content pinned by us, we encourage you to reach out to us through our Discord channel. Our team would be more than happy to assist you with the process. Please note that any content we pin must comply with our policies and guidelines, as well as all relevant laws and regulations."
+    />
+
+  <Fragment slot="footer">
+    <script src="../scripts/home/index.js"></script>
+  </Fragment>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import Container from "../components/Container.astro";
+import Icon from "../elements/Icon.astro";
+
+---
+
+<Container className="home hero" >
+
+    <div class="icon light only">
+      <Icon variant="hero-light" />
+    </div>
+
+    <div class="icon dark only">
+      <Icon variant="hero-dark" />
+    </div>
+
+    <div class="content">
+      <p>Neptune Mutual IPFS Gateway</p>
+
+      <h1>
+        Welcome to Neptune Mutual IPFS Gateway
+      </h1>
+
+      <input type="text" placeholder="Enter IPFS Hash" class="ipfs hash" />
+
+      <iframe class="display result" allowtransparency />
+    </div>
+
+</Container>
