@@ -1,0 +1,422 @@
+---
+// The content of this file is the bundle output of src/scripts/home/index.js
+---
+
+<script is:inline nonce="UNdKaB1NCXxv0Q1D5lMsrw==">
+"use strict";
+(() => {
+  // src/scripts/components/nav/mega-menu.js
+  {
+    let click = function(event) {
+      event.stopPropagation();
+      const openState = subMenu.getAttribute("data-open");
+      const newState = openState === "true" ? "false" : "true";
+      subMenu.setAttribute("data-open", newState);
+      event.currentTarget.setAttribute("data-open", newState);
+    };
+    click2 = click;
+    const subMenu = document.querySelector(".sub.menu.container");
+    document.querySelector(".display.resources.mega.menu").addEventListener("click", click);
+    document.addEventListener("click", (e) => {
+      const button = document.querySelector('nav button[data-open="true"]');
+      if (button == null)
+        return;
+      const width = window.innerWidth;
+      if (width < 1024) {
+        if (!e.target.closest("#MobileMenu")) {
+          subMenu.setAttribute("data-open", "false");
+          button.setAttribute("data-open", "false");
+        }
+        return;
+      }
+      if (!e.target.closest(".sub.menu.container")) {
+        subMenu.setAttribute("data-open", "false");
+        button.setAttribute("data-open", "false");
+      }
+    });
+  }
+  var click2;
+
+  // src/scripts/components/nav/hamburger.js
+  {
+    let click = function(event) {
+      event.stopPropagation();
+      const mobileMenu = document.getElementById("MobileMenu");
+      const openState = mobileMenu.getAttribute("data-open");
+      const newState = openState === "true" ? "false" : "true";
+      mobileMenu.setAttribute("data-open", newState);
+      event.currentTarget.setAttribute("data-open", newState);
+      body.style.overflowY = newState === "true" ? "hidden" : "visible";
+    }, keydown = function(e) {
+      const mobileMenu = document.querySelector('#MobileMenu[data-open="true"]');
+      const button = document.querySelector(
+        ".hamburger.button.container[data-open]"
+      );
+      const key = e.which || e.keyCode || e.charCode;
+      if (key !== 27 || mobileMenu == null) {
+        return;
+      }
+      mobileMenu.setAttribute("data-open", "false");
+      button.setAttribute("data-open", "false");
+      body.style.overflowY = "visible";
+    };
+    click2 = click, keydown2 = keydown;
+    const body = document.querySelector("body");
+    document.addEventListener("click", (e) => {
+      const mobileMenu = document.querySelector('#MobileMenu[data-open="true"]');
+      const button = document.querySelector(
+        ".hamburger.button.container[data-open]"
+      );
+      if (mobileMenu == null)
+        return;
+      if (!e.target.closest("#MobileMenu")) {
+        mobileMenu.setAttribute("data-open", "false");
+        button.setAttribute("data-open", "false");
+        body.style.overflowY = "visible";
+      }
+    });
+    document.querySelector("button.hamburger.button.container").addEventListener("click", click);
+    document.addEventListener("keydown", keydown);
+  }
+  var click2;
+  var keydown2;
+
+  // service/api/constants.ts
+  var WEBSITE_ORIGIN = "https://neptunemutual.com";
+
+  // service/api/client.ts
+  var resources = [
+    // [Api.Media, "api/media?limit=1000"],
+    ["pages" /* Policy */, "cache/pages.json"],
+    ["videos" /* Video */, "cache/videos.json"]
+  ];
+  var getAllData = async () => {
+    try {
+      const promises = [];
+      resources.map((resource) => {
+        const [, path, fqu] = resource;
+        const url = fqu ? path : `${WEBSITE_ORIGIN}/${path}`;
+        promises.push(fetch(url));
+      });
+      try {
+      } catch (e) {
+      }
+      const responses = await Promise.all(promises);
+      const [policies2, videos2] = await Promise.all(
+        responses.map((res) => res.json())
+      );
+      return {
+        policies: {
+          ...policies2,
+          docs: policies2.docs.slice(0, 4)
+        },
+        videos: {
+          ...videos2,
+          docs: videos2.docs.slice(0, 4)
+        }
+      };
+    } catch (err) {
+      console.error(
+        `Error in fetching json from "https://neptunemutual.com": 
+${err}
+`
+      );
+    }
+    return {
+      policies: null,
+      videos: null
+    };
+  };
+
+  // src/scripts/global/search/dom.js
+  var createEl = ({ type, html, className, attributes, appendTo }) => {
+    const el = document.createElement(type);
+    if (html) {
+      el.innerHTML = html;
+    }
+    if (className) {
+      el.className = className;
+    }
+    for (const attribute of attributes || []) {
+      const { key, value } = attribute;
+      el.setAttribute(key, value);
+    }
+    if (appendTo) {
+      appendTo.append(el);
+    }
+    return el;
+  };
+
+  // src/scripts/global/theme/index.js
+  var darkModeInputCheckboxes = document.querySelectorAll("#DarkModeInputCheckbox");
+  var switchTheme = async () => {
+    const theme2 = window.getTheme();
+    const switchTo = theme2 === "dark" ? "light" : "dark";
+    window.localStorage.setItem("theme", switchTo);
+    updateThemeLinks();
+    darkModeInputCheckboxes.forEach(async (darkModeInputCheckbox) => {
+      await window.loadTheme(darkModeInputCheckbox);
+    });
+  };
+  var theme = window.getTheme();
+  darkModeInputCheckboxes.forEach((darkModeInputCheckbox) => {
+    darkModeInputCheckbox.checked = theme === "dark";
+    darkModeInputCheckbox.addEventListener("click", switchTheme, { passive: true });
+  });
+  var search = window.location.search.replace(/&?theme=[dark|light]+&?/g, "").trim();
+  var newURL = window.location.pathname + (search.length <= 1 ? "" : search);
+  window.history.replaceState({}, void 0, newURL);
+  window.localStorage.setItem("theme", theme);
+  var isValidUrl = (href) => {
+    try {
+      new URL(href);
+      return true;
+    } catch (error) {
+    }
+    return false;
+  };
+  var isSameHost = (href) => {
+    const url = new URL(href);
+    const currentUrl = new URL(window.location);
+    return url.host === currentUrl.host;
+  };
+  var supportsTheme = (href) => {
+    if (!isValidUrl(href) || isSameHost(href)) {
+      return false;
+    }
+    const hostsWithSameHeader = ["nft.neptunemutual.com", "neptunemutual.com", "explorer.neptunemutual.net", "ipfs.neptunemutual.net"];
+    const url = new URL(href);
+    if (!hostsWithSameHeader.includes(url.host)) {
+      return false;
+    }
+    return true;
+  };
+  var addTheme = (href, theme2) => {
+    if (!theme2) {
+      return href;
+    }
+    const url = new URL(href);
+    url.searchParams.set("theme", theme2);
+    return url.href;
+  };
+  var updateThemeLinks = () => {
+    const links = document.querySelectorAll("a");
+    links.forEach((link) => {
+      if (supportsTheme(link.href)) {
+        link.href = addTheme(link.href, window.getTheme());
+      }
+    });
+  };
+  updateThemeLinks();
+
+  // src/scripts/components/api/fallback-data.js
+  var videos = {
+    docs: [
+      {
+        id: "645c4100520faa1734dd1e7b",
+        title: "NPM Token Utility",
+        videoId: "PaU90gpZ4Eo",
+        thumbnail: {
+          filename: "npm-utility-video.webp"
+        },
+        htmlAsText: "Utility of NPM token and the different features it allows you to access."
+      },
+      {
+        id: "64072b77d059a10bd2ae66e9",
+        title: "Benefits of Arbitrum and Ethereum Scaling",
+        videoId: "S_Up-UCrm1Y",
+        thumbnail: {
+          filename: "arbitrum-powerful-layer2-solution.webp"
+        },
+        htmlAsText: "Discover Arbitrum and why it is a powerful Ethereum Layer 2."
+      },
+      {
+        id: "639b0b7a29a6254e0c663683",
+        title: "How to Purchase Cover Policy?",
+        videoId: "0UTIuqWHVHY",
+        thumbnail: {
+          filename: "tutorial-video-purchase-cover-policy.webp"
+        },
+        htmlAsText: "This video walks you through the stages of purchasing a parametric cover policy on Neptune Mutual's testnet application.\n"
+      },
+      {
+        id: "639b0aec29a6254e0c66355b",
+        title: "Reduce Your Exposure to Crypto Market Risks",
+        videoId: "GeqjuV1u4UI",
+        thumbnail: {
+          filename: "neptune-mutual-explainer-video.webp"
+        },
+        htmlAsText: "Visit https://neptunemutual.com/ today to find out more about parametric covers and how you can protect your digital assets.\n\nCrypto's fast-evolving nature makes it both a rewarding and challenging industry to explore. Being relatively new, it\u2019s also a risky market to dive into, especially without a reliable safety net to fall back on. If you\u2019re invested in the blockchain, it\u2019s crucial to protect yourself against hackers and exploits in the space. Safeguard your digital assets from crypto market risks and purchase a cover policy on #NeptuneMutual. \n\nYou can also support your favorite projects on the platform by providing liquidity, reporting incidents, and staking in cover pools.\n\nTry out Neptune Mutual on our testnet: \nhttps://test.neptunemutual.com/ \u{1F531}\n\nIt\u2019s super easy to use! \n\nCheck out our step-by-step starter guide on how to use the Neptune Mutual testnet: \n\nhttps://medium.com/neptune-mutual/nep... \n\nAbout Us\n\nNeptune Mutual is a cover protocol that enables users to purchase cover policies to protect their digital assets from hacks and exploits. The protocol uses parametric cover as opposed to discretionary insurance. It has an easy and reliable on-chain claim process. This means that when incidents are confirmed by our community, resolution is fast and payouts to all cover policyholders are guaranteed.\n\nJoin us in our mission to cover, protect, and secure on-chain digital assets.\n\nFollow us on Medium: \nhttps://neptunemutual.medium.com/\n\nStay updated on the latest protocol and industry news on Twitter: https://twitter.com/neptunemutual\n\nConnect with our global community on Discord: \nhttps://discord.com/channels/84697506...\n\nShare interests with our community on Telegram: \nhttps://t.me/neptunemutual\n\nParticipate in our discussions on Reddit: \nhttps://www.reddit.com/r/NeptuneMutual"
+      }
+    ],
+    totalDocs: 14,
+    limit: 1e3,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  };
+  var policies = {
+    docs: [
+      {
+        id: "639ce3f9f739b69e520f4136",
+        title: "Privacy Policy",
+        slug: "privacy-policy"
+      },
+      {
+        id: "639395ad0e1033cf72b3a38f",
+        title: "Standard Terms and Conditions",
+        slug: "standard-terms-and-conditions",
+        priority: 3
+      },
+      {
+        id: "639395ad0e1033cf72b3a391",
+        title: "Risk Factors",
+        slug: "risk-factors",
+        priority: 1
+      },
+      {
+        id: "639395ae0e1033cf72b3a395",
+        title: "Terms of Use",
+        slug: "terms-of-use",
+        priority: 2
+      }
+    ],
+    totalDocs: 4,
+    limit: 1e3,
+    totalPages: 1,
+    page: 1,
+    pagingCounter: 1,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
+  };
+
+  // src/scripts/components/api/api.js
+  var content = document.querySelector(
+    "div.nav.video.section.container > .content"
+  );
+  var videoContainer = content.querySelector("button.video.container");
+  var policiesNav = document.querySelector("footer .nav.container > nav");
+  async function updateDom() {
+    const { policies: p, videos: v } = await getAllData();
+    const _policies = p || policies;
+    const _videos = v || videos;
+    _videos.docs.map((video) => {
+      const videoButtonElement = videoContainer.cloneNode(true);
+      videoButtonElement.classList.remove("initial", "hidden");
+      videoButtonElement.setAttribute("data-video-id", video.videoId);
+      videoButtonElement.querySelector("div.thumbnail > img").setAttribute("src", `${WEBSITE_ORIGIN}/cdn/${video.thumbnail.filename}`);
+      videoButtonElement.querySelector("div.thumbnail > img").setAttribute("alt", `Thumbnail for video titled: "${video.title}"`);
+      videoButtonElement.querySelector("div.video.content > h3.title").innerText = video.title;
+      videoButtonElement.querySelector(
+        "div.video.content > p.supporting.text"
+      ).innerText = video.htmlAsText;
+      content.append(videoButtonElement);
+    });
+    const listDiv = createEl({
+      appendTo: policiesNav,
+      className: "list",
+      type: "div"
+    });
+    createEl({
+      appendTo: listDiv,
+      type: "h2",
+      html: "Policies"
+    });
+    const listUl = createEl({
+      appendTo: listDiv,
+      type: "ul"
+    });
+    _policies.docs.map((policy) => {
+      const policyLi = createEl({
+        appendTo: listUl,
+        type: "li"
+      });
+      createEl({
+        appendTo: policyLi,
+        type: "a",
+        attributes: [
+          { key: "href", value: `${WEBSITE_ORIGIN}/policies/${policy.slug}` }
+        ],
+        html: policy.title
+      });
+    });
+    updateThemeLinks();
+  }
+
+  // src/scripts/global/video.js
+  var modalSelector = ".video.modal.container";
+  var iframeSelector = "iframe.video.modal.iframe";
+  var playButtonSelector = ".video.play.button";
+  var videoContainer2 = document.querySelector(modalSelector);
+  var iframe = document.querySelector(iframeSelector);
+  async function update() {
+    await updateDom();
+    const videoPlayButtons = document.querySelectorAll(playButtonSelector);
+    videoPlayButtons.forEach((videoPlayButton) => {
+      videoPlayButton.addEventListener("click", onModalOpen);
+    });
+  }
+  update();
+  function onModalOpen(e) {
+    const videoId = e.currentTarget.getAttribute("data-video-id");
+    const videoSrc = `https://www.youtube.com/embed/${videoId}`;
+    iframe.setAttribute("src", videoSrc);
+    videoContainer2.setAttribute("data-open", "true");
+    document.addEventListener("keydown", onEscapeKey);
+  }
+  var onModalClose = () => {
+    iframe.removeAttribute("src");
+    document.removeEventListener("keydown", onEscapeKey);
+    videoContainer2.setAttribute("data-open", "false");
+  };
+  function onEscapeKey(e) {
+    if (e.key === "Escape") {
+      onModalClose();
+    }
+  }
+  videoContainer2.addEventListener("click", () => {
+    onModalClose();
+  });
+
+  // src/scripts/global/hash.js
+  setTimeout(() => {
+    if (!window.location.hash) {
+      return;
+    }
+    const el = document.querySelector(window.location.hash);
+    if (el == null) {
+      return;
+    }
+    el.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 1e3);
+
+  // src/scripts/global/script-only.js
+  document.querySelectorAll(".script.only").forEach((x) => x.classList.remove("script", "only"));
+
+  // src/scripts/components/ipfs/index.js
+  {
+    const input = document.querySelector("input.ipfs.hash");
+    const iframe2 = document.querySelector("iframe.display.result");
+    const IPFS_ORIGIN = "https://ipfs.neptunemutual.net/ipfs/";
+    if (input != null && iframe2 != null) {
+      input.addEventListener("input", (e) => {
+        const hash = e.target.value;
+        if (!hash) {
+          iframe2.removeAttribute("src");
+          return;
+        }
+        iframe2.setAttribute("src", IPFS_ORIGIN + hash);
+      });
+    }
+  }
+})();
+</script>

@@ -8,6 +8,7 @@
     "build": "astro build",
     "build:production": "NODE_ENV=production astro build",
     "preview": "astro preview",
+    "publish": "sudo rsync -av --delete dist/ /var/www/html/ipfs/",
     "astro": "astro"
   },
   "license": "LicenseRef-LICENSE",

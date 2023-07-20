@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Seo from "../components/Seo.astro";
 import styles from "./index.scss?inline";
 import Home from "../views/Home.astro"
+import MainScript from "../components/MainScript.astro";
 ---
 
 <BaseLayout headerStyle="default">
@@ -15,11 +16,11 @@ import Home from "../views/Home.astro"
       imageAlt: "Neptune Mutual IPFS Gateway",
     }}
   />
-  <style slot="header" is:inline set:html={styles}></style>
+  <style slot="header" is:inline set:html={styles} nonce="0iUzu6Bv7cOYWfllpiioow=="></style>
   
     <Home />
 
   <Fragment slot="footer">
-    <script src="../scripts/home/index.js"></script>
+    <MainScript/>
   </Fragment>
 </BaseLayout>
