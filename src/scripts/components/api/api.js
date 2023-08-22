@@ -1,4 +1,3 @@
-import { getAllData } from "../../../../service/api/client";
 import { WEBSITE_ORIGIN } from "../../../../service/api/constants";
 import { createEl } from "../../global/search/dom";
 import { updateThemeLinks } from "../../global/theme";
@@ -12,7 +11,7 @@ const videoContainer = content.querySelector("button.video.container");
 const policiesNav = document.querySelector("footer .nav.container > nav");
 
 async function updateDom() {
-  const { policies: p, videos: v } = await getAllData();
+  const { policies: p, videos: v } = {}
 
   const _policies = p || policies;
   const _videos = v || videos;

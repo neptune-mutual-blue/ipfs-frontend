@@ -84,50 +84,6 @@
   // service/api/constants.ts
   var WEBSITE_ORIGIN = "https://neptunemutual.com";
 
-  // service/api/client.ts
-  var resources = [
-    // [Api.Media, "api/media?limit=1000"],
-    ["pages" /* Policy */, "cache/pages.json"],
-    ["videos" /* Video */, "cache/videos.json"]
-  ];
-  var getAllData = async () => {
-    try {
-      const promises = [];
-      resources.map((resource) => {
-        const [, path, fqu] = resource;
-        const url = fqu ? path : `${WEBSITE_ORIGIN}/${path}`;
-        promises.push(fetch(url));
-      });
-      try {
-      } catch (e) {
-      }
-      const responses = await Promise.all(promises);
-      const [policies2, videos2] = await Promise.all(
-        responses.map((res) => res.json())
-      );
-      return {
-        policies: {
-          ...policies2,
-          docs: policies2.docs.slice(0, 4)
-        },
-        videos: {
-          ...videos2,
-          docs: videos2.docs.slice(0, 4)
-        }
-      };
-    } catch (err) {
-      console.error(
-        `Error in fetching json from "https://neptunemutual.com": 
-${err}
-`
-      );
-    }
-    return {
-      policies: null,
-      videos: null
-    };
-  };
-
   // src/scripts/global/search/dom.js
   var createEl = ({ type, html, className, attributes, appendTo }) => {
     const el = document.createElement(type);
@@ -303,7 +259,7 @@ ${err}
   var videoContainer = content.querySelector("button.video.container");
   var policiesNav = document.querySelector("footer .nav.container > nav");
   async function updateDom() {
-    const { policies: p, videos: v } = await getAllData();
+    const { policies: p, videos: v } = {};
     const _policies = p || policies;
     const _videos = v || videos;
     _videos.docs.map((video) => {
@@ -419,4 +375,5 @@ ${err}
     }
   }
 })();
+
 </script>
