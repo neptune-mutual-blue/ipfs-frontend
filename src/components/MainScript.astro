@@ -371,7 +371,19 @@
           return;
         }
         iframe2.setAttribute("src", IPFS_ORIGIN + hash);
+
+        // remove hash from query string
+        window.history.replaceState({}, document.title, window.location.pathname);
       });
+    }
+
+    // update iframe src if hash is in the query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const hash = urlParams.get("hash");
+    if (hash) {
+      input.value = hash;
+      input.scrollIntoView({ behavior: "smooth", block: "start" });
+      iframe2.setAttribute("src", IPFS_ORIGIN + hash);
     }
   }
 })();
