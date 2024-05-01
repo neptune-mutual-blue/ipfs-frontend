@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
-    "build:production": "NODE_ENV=production astro build",
+    "build": "astro build && yarn move-html",
+    "build:production": "NODE_ENV=production astro build && yarn move-html",
     "preview": "astro preview",
     "publish": "sudo rsync -av --delete dist/ /var/www/html/ipfs/",
-    "astro": "astro"
+    "astro": "astro",
+    "move-html": "sudo mv dist/451/index.html dist/451.html"
   },
   "license": "LicenseRef-LICENSE",
   "dependencies": {
